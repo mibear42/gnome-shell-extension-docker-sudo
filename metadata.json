@@ -1,5 +1,5 @@
 {
-  "uuid": "docker_status@gpouilloux",
+  "uuid": "docker_status@mibear42",
   "shell-version": [
     "3.14",
     "3.16",
@@ -13,7 +13,7 @@
     "3.30",
     "3.32"
   ],
-  "description": "A status menu for managing docker containers.",
+  "description": "An extension for managing docker containers, using sudo docker",
   "name": "Docker Integration",
-  "url": "https://github.com/gpouilloux/gnome-shell-extension-docker"
+  "url": "https://github.com/mibear42/gnome-shell-extension-docker-sudo"
 }
