@@ -66,9 +66,15 @@ var isDockerRunning = () => {
  * @return {Array} The array of containers as { name, status }
  */
 var getContainers = () => {
-    const [res, out, err, status] = GLib.spawn_command_line_sync("docker ps -a --format '{{.Names}},{{.Status}}'");
+    let cmdDocker = "docker ";
+    let [res, out, err, status] = GLib.spawn_command_line_sync("sh -c \"sudo -l| grep -e 'NOPASSWD:.*docker\\(\\*\\| ps\\)'\"");
+    if (status == 0) {
+        cmdDocker = "sudo docker ";
+    }
+
+    [res, out, err, status] = GLib.spawn_command_line_sync(cmdDocker + "ps -a --format '{{.Names}},{{.Status}}'");
     if (status !== 0)
-        throw new Error("Error occurred when fetching containers");
+        throw new Error("Error occurred when fetching containers (docker.js): "+status);
 
     return String.fromCharCode.apply(String, out).trim().split('\n')
         .filter((string) => string.length > 0)
@@ -88,9 +94,15 @@ var getContainers = () => {
  * @param {Function} callback A callback that takes the status, command, and stdErr
  */
 var runCommand = (command, containerName, callback) => {
-    const cmd = "docker " + command + " " + containerName;
+    let cmdDocker = "docker ";
+    let [res, out, err, status] = GLib.spawn_command_line_sync("sudo -l| grep -e 'NOPASSWD:.*docker\\(\\*\\| " + command + "\\)'");
+    if (status == 0) {
+        cmdDocker = "sudo docker ";
+    }
+
+    const cmd = cmdDocker + command + " " + containerName;
     async(() => {
-        const res = GLib.spawn_command_line_async(cmd);
+        res = GLib.spawn_command_line_async(cmd);
         return res;
     }, (res) => callback(res));
 }

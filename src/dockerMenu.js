@@ -90,7 +90,7 @@ var DockerMenu = class DockerMenu_DockerMenu extends PanelMenu.Button {
           );
         }
       } catch (err) {
-        const errMsg = "Error occurred when fetching containers";
+        const errMsg = "Error occurred when fetching containers (dockerMenu.js)";
         this.menu.addMenuItem(new PopupMenu.PopupMenuItem(errMsg));
         log(errMsg);
         log(err);
