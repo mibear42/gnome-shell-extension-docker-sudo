@@ -95,7 +95,11 @@ var getContainers = () => {
  */
 var runCommand = (command, containerName, callback) => {
     let cmdDocker = "docker ";
+<<<<<<< HEAD
     let [res, out, err, status] = GLib.spawn_command_line_sync("sh -c \"sudo -l| grep -e 'NOPASSWD:.*docker\\(\\*\\| " + command + "\\)'\"");
+=======
+    let [res, out, err, status] = GLib.spawn_command_line_sync("sudo -l| grep -e 'NOPASSWD:.*docker\\(\\*\\| " + command + "\\)'");
+>>>>>>> f46e574f62a9794080bfa1b928a1a456c662d0cf
     if (status == 0) {
         cmdDocker = "sudo docker ";
     }
